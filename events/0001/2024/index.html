@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>EMS – Jahr 2024 | Sonnenburg Endurance Festival</title>
+  <title>EMS – Jahr 2024</title>
   <link rel="stylesheet" href="../../../core/ems.css">
 </head>
 <body>
@@ -12,7 +12,9 @@
   <img src="../../../core/img/ems-logo.png" class="logo" alt="EMS Logo">
   <div>
     <div class="title">EventMetriken Sonnenburg</div>
-    <div class="subtitle">Jahrgangs-Statistik & Ergebnisse</div>
+    <div class="subtitle" id="topbar-subtitle">
+      Jahrgangs-Statistik & Ergebnisse
+    </div>
   </div>
 
   <div class="searchbox">
@@ -25,20 +27,26 @@
 <div class="sidebar">
   <div class="sidebar-section">
     <h4>Allgemein</h4>
-    <a href="../../../index.html"><span class="icon">🏠</span> Landing / My Business</a>
-    <a href="../index.html"><span class="icon">📊</span> Event-Übersicht</a>
+    <a href="../../../index.html">
+      <span class="icon">🏠</span> Landing / My Business
+    </a>
+    <!-- Link zurück zur Event-Übersicht -->
+    <a id="sidebar-event-link" href="../index.html">
+      <span class="icon">📊</span> Event-Übersicht
+    </a>
   </div>
+
   <div class="sidebar-section">
     <h4>Jahrgänge</h4>
-    <a class="active" href="./index.html"><span class="icon">📅</span> Jahr 2024</a>
-    <a href="../2023/index.html"><span class="icon">📅</span> Jahr 2023</a>
-    <!-- weitere Jahre… -->
+    <!-- wird per JS aus event_meta.activeYears gefüllt -->
+    <div id="sidebar-years"></div>
   </div>
 </div>
 
 <!-- MAIN -->
 <main>
   <div class="layout-narrow">
+    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <a href="../../../index.html">Landing / My Business</a>
       <span class="sep">›</span>
@@ -75,7 +83,7 @@
     </section>
 
     <!-- RACE SELECTION + RESULTS -->
-    <section class="card">
+    <section class="card" id="view-results">
       <h2>Ergebnis-Tabelle</h2>
 
       <div class="filter-row">
@@ -83,7 +91,7 @@
           <label for="race-select">Wettkampf:</label>
           <select id="race-select"></select>
         </div>
-        <!-- weitere Filter (AK, Geschlecht…) kannst du später ergänzen -->
+        <!-- weitere Filter (AK, Geschlecht…) können später kommen -->
       </div>
 
       <div id="results-table-container">
@@ -92,76 +100,170 @@
     </section>
 
     <!-- HEATMAP / ORIGIN / MARKETING INSIGHTS -->
-    <section class="card">
+    <section class="card" id="view-heatmap">
       <h2>Herkunft & Marketing-Insights</h2>
       <div class="placeholder-panel">
         <div id="chart-gender" style="margin-bottom:12px;"></div>
         <div id="chart-countries"></div>
-        <!-- Später: echte Heatmap einbauen -->
+        <!-- Später: echte Karte / Heatmap etc. -->
       </div>
     </section>
   </div>
 </main>
 
-<!-- JS -->
+<!-- JS MODULES -->
 <script src="../../../core/js/tables.js"></script>
 <script src="../../../core/js/charts.js"></script>
 <script>
 (async function () {
   try {
-    const yearMeta = await fetch('year_meta.json').then(r => r.json());
+    // 1) Load event + year meta (single sources of truth)
+    const [eventMeta, yearMeta] = await Promise.all([
+      fetch('../event_meta.json').then(r => r.json()),
+      fetch('./year_meta.json').then(r => r.json())
+    ]);
 
-    // basic text
-    document.getElementById('year-title').textContent = yearMeta.title;
-    document.getElementById('year-description').textContent = yearMeta.description || '';
-    document.getElementById('crumb-event-name').textContent = yearMeta.eventName;
-    document.getElementById('crumb-year').textContent = `Jahr ${yearMeta.year}`;
+    const currentYear = yearMeta.year;
 
-    // build race dropdown
+    // 2) Basic text from meta (no duplication)
+    const eventName = eventMeta.eventName;
+    document.getElementById('crumb-event-name').textContent = eventName;
+    document.getElementById('crumb-year').textContent = 'Jahr ' + currentYear;
+
+    const title = yearMeta.titleOverride
+      ? yearMeta.titleOverride
+      : eventName + ' ' + currentYear;
+
+    document.getElementById('year-title').textContent = title;
+
+    const descParts = [];
+    if (eventMeta.description) descParts.push(eventMeta.description);
+    if (yearMeta.description) descParts.push(yearMeta.description);
+    document.getElementById('year-description').textContent =
+      descParts.join(' ');
+
+    // 3) Sidebar: years based on event_meta.activeYears
+    const yearsContainer = document.getElementById('sidebar-years');
+    yearsContainer.innerHTML = '';
+    const activeYears = eventMeta.activeYears || [];
+
+    activeYears.sort().forEach(year => {
+      const a = document.createElement('a');
+      a.innerHTML = '<span class="icon">📅</span> Jahr ' + year;
+
+      if (year === currentYear) {
+        a.classList.add('active');
+        a.href = './index.html';
+      } else {
+        a.href = '../' + year + '/index.html';
+      }
+      yearsContainer.appendChild(a);
+    });
+
+    // sidebar event link label from event name
+    const sidebarEventLink = document.getElementById('sidebar-event-link');
+    sidebarEventLink.innerHTML =
+      '<span class="icon">📊</span> ' + eventName + ' – Übersicht';
+
+    // 4) Race dropdown from year_meta.races
     const raceSelect = document.getElementById('race-select');
-    yearMeta.races.forEach(race => {
+    const races = yearMeta.races || [];
+
+    races.forEach(race => {
       const opt = document.createElement('option');
       opt.value = race.id;
-      opt.textContent = `${race.name} (${race.distance_km} km)`;
+      opt.textContent = race.name || race.id;
       raceSelect.appendChild(opt);
     });
 
+    // 5) Optionally handle which "views" (sections) are active
+    // year_meta example:
+    // "views": { "results": true, "heatmap": false }
+    const views = yearMeta.views || {};
+    if (views.results === false) {
+      document.getElementById('view-results').style.display = 'none';
+    }
+    if (views.heatmap === false) {
+      document.getElementById('view-heatmap').style.display = 'none';
+    }
+
+    // 6) Load stats for all races once -> aggregate year totals
+    const raceStatsCache = {}; // { raceId: stats }
+
+    await Promise.all(
+      races.map(async race => {
+        if (!race.stats) return;
+        const stats = await fetch(race.stats).then(r => r.json());
+        raceStatsCache[race.id] = stats;
+      })
+    );
+
+    // Aggregate total year metrics from all races
+    let totalParticipants = 0;
+    let totalFinishers = 0;
+    let totalNoShows = 0;
+    let totalDnf = 0;
+
+    Object.values(raceStatsCache).forEach(stats => {
+      totalParticipants += stats.participantsTotal || 0;
+      totalFinishers   += stats.finishers || 0;
+      totalNoShows     += stats.noShows || 0;
+      totalDnf         += stats.dnf || 0;
+    });
+
+    document.getElementById('stat-participants').textContent = totalParticipants || '–';
+    document.getElementById('stat-finishers').textContent   = totalFinishers   || '–';
+    document.getElementById('stat-noshows').textContent     = totalNoShows     || '–';
+    document.getElementById('stat-dnf').textContent         = totalDnf         || '–';
+
+    // 7) Helper to load + display one race (results + charts)
     async function loadRace(raceId) {
-      const race = yearMeta.races.find(r => r.id === raceId) || yearMeta.races[0];
+      const race = races.find(r => r.id === raceId) || races[0];
       if (!race) return;
 
-      const stats = await fetch(race.statsFile).then(r => r.json());
-      const results = await fetch(race.resultsFile).then(r => r.json());
+      // ensure stats in cache (in case new race added later)
+      let stats = raceStatsCache[race.id];
+      if (!stats && race.stats) {
+        stats = await fetch(race.stats).then(r => r.json());
+        raceStatsCache[race.id] = stats;
+      }
 
-      // update header stats
-      document.getElementById('stat-participants').textContent = stats.participantsTotal ?? '–';
-      document.getElementById('stat-finishers').textContent = stats.finishers ?? '–';
-      document.getElementById('stat-noshows').textContent = stats.noShows ?? '–';
-      document.getElementById('stat-dnf').textContent = stats.dnf ?? '–';
+      // always load results live from JSON
+      let results = [];
+      if (race.results) {
+        results = await fetch(race.results).then(r => r.json());
+      }
 
-      // render table + “charts”
+      // render table
       if (window.EMSTables) {
         window.EMSTables.renderResultsTable('results-table-container', results);
       }
+
+      // render simple textual charts (can later be real charts)
       if (window.EMSCharts) {
-        window.EMSCharts.renderGenderSplit('chart-gender', stats.genderSplit);
-        window.EMSCharts.renderCountryList('chart-countries', stats.countries);
+        window.EMSCharts.renderGenderSplit('chart-gender', stats?.genderSplit);
+        window.EMSCharts.renderCountryList('chart-countries', stats?.countries);
       }
     }
 
-    // load initial race
-    const initialRaceId = yearMeta.races[0]?.id;
+    // 8) Initial race (first in list)
+    const initialRaceId = races[0]?.id;
     if (initialRaceId) {
       raceSelect.value = initialRaceId;
       await loadRace(initialRaceId);
     }
 
+    // 9) Race change handler
     raceSelect.addEventListener('change', () => {
       loadRace(raceSelect.value);
     });
 
   } catch (e) {
     console.error('Fehler beim Laden der Jahrgangsdaten', e);
+    const descEl = document.getElementById('year-description');
+    if (descEl) {
+      descEl.textContent = 'Fehler beim Laden der Daten für diesen Jahrgang.';
+    }
   }
 })();
 </script>
