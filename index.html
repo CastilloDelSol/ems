@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>EMS – Landing</title>
+    <link rel="stylesheet" href="ems.css">
+</head>
+<body>
+
+<div class="topbar">
+    <img src="ems-logo.png" class="logo" alt="EMS Logo">
+    <div>
+        <div class="title">EventMetriken Sonnenburg</div>
+        <div class="subtitle">Visualisierung & Analytik für Ausdauer-Events</div>
+    </div>
+
+    <div class="searchbox">
+        <label for="top-search">Events:</label>
+        <input id="top-search" type="text" placeholder="Ironman, Stadtlauf, Vereinsmeisterschaft…">
+    </div>
+</div>
+
+<div class="sidebar">
+    <div class="sidebar-section">
+        <h4>Allgemein</h4>
+        <a class="active" href="index.html"><span class="icon">🏠</span> Landing / My Business</a>
+        <a href="events.html"><span class="icon">📊</span> Events</a>
+    </div>
+    <div class="sidebar-section">
+        <h4>Verwaltung</h4>
+        <a href="#"><span class="icon">⚙</span> Einstellungen</a>
+    </div>
+</div>
+
+<main>
+    <div class="layout-narrow">
+        <!-- Hero with background image -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-title">Rennen sichtbar machen.</div>
+                <div class="hero-subtitle">
+                    EMS visualisiert Rennverläufe, Teilnehmerströme und Kennzahlen –
+                    von Ironman-Distanzen bis zu kleinen Volks- und Vereinsläufen.
+                </div>
+                <form class="hero-search">
+                    <input type="text" placeholder="Event suchen – z.B. &quot;Sonnenburg Triathlon&quot;">
+                    <button type="submit">Suchen</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- What we do -->
+        <section class="card">
+            <h2>Was EMS macht</h2>
+            <p>
+                EventMetriken Sonnenburg hostet Renn-Events und liefert dazu
+                interaktive Auswertungen: Startlisten, Ergebnis-Tabellen,
+                Live-Splits, Heatmaps der Herkunft, Langzeit-Trends pro Event
+                und Jahrgang.
+            </p>
+
+            <div class="stat-grid" style="margin-top:16px;">
+                <div class="stat-card">
+                    <div class="label">Aktive Events</div>
+                    <div class="value">12 Ausdauer-Events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Teilnehmer gesamt</div>
+                    <div class="value">> 8.500 Athlet:innen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Zeitraum</div>
+                    <div class="value">2016 – 2025</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick access to events -->
+        <section class="card">
+            <h2>Direkter Einstieg</h2>
+            <p>Beispiele für Events, die von EMS gehostet werden:</p>
+            <div class="pills" style="margin-top:10px;">
+                <a href="event.html" class="pill">Sonnenburg Endurance Festival</a>
+                <span class="pill">Stadtlauf Musterstadt</span>
+                <span class="pill">Vereinsmeisterschaft Tri Team</span>
+            </div>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>
