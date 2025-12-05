@@ -1,0 +1,12 @@
+{
+  "eventId": "0001",
+  "eventName": "Sonnenburg Endurance Festival",
+  "location": "Sonnenburg, DE",
+  "organizer": "EventMetriken Sonnenburg",
+  "description": "Mehrtägiges Ausdauer-Festival mit Triathlon, Laufbewerben und Staffeln.",
+
+  "activeYears": [2018, 2019, 2021, 2022, 2023, 2024],
+
+  "logo": "../../core/img/ems-logo.png",
+  "status": "active"
+}
