@@ -1,0 +1,368 @@
+/* =========================
+   GLOBAL COLORS
+   ========================= */
+:root {
+    --ems-bg: #e6e2dd;       /* warm grey background */
+    --ems-bg-light: #f4f2f0; /* lighter warm grey */
+    --ems-blue: #1e3a47;     /* logo primary */
+    --ems-blue-light: #2d5561;
+    --ems-accent: #d2835e;   /* warm orange accent */
+    --ems-text: #1a1a1a;
+    --ems-text-light: #555;
+    --ems-border: #c8c5c1;
+}
+
+/* =========================
+   GLOBAL RESET
+   ========================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 sans-serif;
+    background: var(--ems-bg);
+    color: var(--ems-text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* =========================
+   TOP BAR WITH LOGO
+   ========================= */
+.topbar {
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid var(--ems-border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.topbar img.logo {
+    height: 42px;
+    margin-right: 15px;
+}
+
+.topbar .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ems-blue);
+}
+
+.topbar .subtitle {
+    font-size: 12px;
+    color: var(--ems-text-light);
+}
+
+.topbar .searchbox {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topbar .searchbox label {
+    font-size: 13px;
+    color: var(--ems-text-light);
+}
+
+.topbar input[type="text"] {
+    padding: 7px 10px;
+    border: 1px solid var(--ems-border);
+    border-radius: 6px;
+    width: 230px;
+    font-size: 13px;
+}
+
+/* =========================
+   SIDEBAR (HYBRID STYLE C)
+   ========================= */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 60px);
+    background: var(--ems-bg-light);
+    border-right: 1px solid var(--ems-border);
+    padding: 18px;
+    overflow-y: auto;
+}
+
+.sidebar h4 {
+    font-size: 13px;
+    color: var(--ems-blue);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sidebar-section {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d8d4d0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 7px 6px;
+    margin-bottom: 3px;
+    text-decoration: none;
+    color: var(--ems-text);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.sidebar a span.icon {
+    margin-right: 6px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: var(--ems-blue);
+    color: #fff;
+}
+
+/* =========================
+   MAIN CONTENT AREA
+   ========================= */
+main {
+    margin-top: 60px;
+    margin-left: 240px;
+    padding: 22px 26px 26px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+.layout-narrow {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Cards */
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--ems-border);
+    margin-bottom: 20px;
+}
+
+.card h1, .card h2, .card h3 {
+    margin-bottom: 8px;
+    color: var(--ems-blue);
+}
+
+.card p {
+    color: var(--ems-text-light);
+    font-size: 14px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: var(--ems-text-light);
+}
+.breadcrumb a {
+    color: var(--ems-blue);
+    text-decoration: none;
+}
+.breadcrumb span.sep {
+    margin: 0 5px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+table th, table td {
+    border: 1px solid var(--ems-border);
+    padding: 7px 9px;
+}
+
+table th {
+    background: var(--ems-blue);
+    color: #fff;
+    text-align: left;
+}
+
+table tr:nth-child(even) {
+    background: var(--ems-bg-light);
+}
+
+/* Stat grid */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.stat-card {
+    background: var(--ems-bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--ems-border);
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+.stat-card .label {
+    color: var(--ems-text-light);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+
+.stat-card .value {
+    font-weight: 600;
+    color: var(--ems-blue);
+}
+
+/* Pills for year list etc. */
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.pill {
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--ems-border);
+    font-size: 13px;
+    background: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--ems-text);
+}
+.pill.active,
+.pill:hover {
+    border-color: var(--ems-blue);
+    background: var(--ems-blue);
+    color: #fff;
+}
+
+/* Placeholder panels (charts / maps) */
+.placeholder-panel {
+    border-radius: 10px;
+    border: 1px dashed var(--ems-border);
+    background: #fbfaf9;
+    padding: 18px;
+    font-size: 13px;
+    color: var(--ems-text-light);
+}
+
+/* Filters row */
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0 6px;
+    font-size: 13px;
+}
+.filter-row select {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--ems-border);
+    background: #fff;
+}
+
+/* =========================
+   LANDING PAGE HERO
+   ========================= */
+.hero {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 260px;
+    margin-bottom: 22px;
+    border: 1px solid var(--ems-border);
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG/1280px-Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG");
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(70%) brightness(0.65);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent),
+                linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.6));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 30px 26px;
+    max-width: 560px;
+}
+
+.hero-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.hero-subtitle {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.hero-search {
+    display: flex;
+    gap: 8px;
+}
+
+.hero-search input[type="text"] {
+    flex: 1;
+    border-radius: 6px;
+    border: none;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.hero-search button {
+    border-radius: 6px;
+    border: none;
+    background: var(--ems-accent);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 900px) {
+    .sidebar {
+        display: none; /* simple: hide sidebar on small screens */
+    }
+    main {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar .subtitle { display: none; }
+    .hero-content { padding: 22px 16px; }
+    .hero-title { font-size: 26px; }
+}
