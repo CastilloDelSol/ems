@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>EMS – Jahr 2024 | Sonnenburg Endurance Festival</title>
+  <link rel="stylesheet" href="../../core/ems.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <img src="../../core/img/ems-logo.png" class="logo" alt="EMS Logo">
+  <div>
+    <div class="title">EventMetriken Sonnenburg</div>
+    <div class="subtitle">Jahrgangs-Statistik & Ergebnisse</div>
+  </div>
+
+  <div class="searchbox">
+    <label for="top-search">Teilnehmer:</label>
+    <input id="top-search" type="text" placeholder="Name, Startnummer…">
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">
+    <h4>Allgemein</h4>
+    <a href="../../index.html"><span class="icon">🏠</span> Landing / My Business</a>
+    <a href="../index.html"><span class="icon">📊</span> Event-Übersicht</a>
+  </div>
+  <div class="sidebar-section">
+    <h4>Jahrgänge</h4>
+    <a class="active" href="./index.html"><span class="icon">📅</span> Jahr 2024</a>
+    <a href="../2023/index.html"><span class="icon">📅</span> Jahr 2023</a>
+    <!-- weitere Jahre… -->
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="layout-narrow">
+    <div class="breadcrumb">
+      <a href="../../index.html">Landing / My Business</a>
+      <span class="sep">›</span>
+      <a href="../index.html" id="crumb-event-name">Event</a>
+      <span class="sep">›</span>
+      <span id="crumb-year">Jahr</span>
+    </div>
+
+    <!-- YEAR HEADER -->
+    <section class="card">
+      <h1 id="year-title">Jahrgang …</h1>
+      <p id="year-description">
+        Lade Jahrgangsdaten…
+      </p>
+
+      <div class="stat-grid" style="margin-top:14px;">
+        <div class="stat-card">
+          <div class="label">Teilnehmer gesamt</div>
+          <div class="value" id="stat-participants">–</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Finisher</div>
+          <div class="value" id="stat-finishers">–</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">No-Shows</div>
+          <div class="value" id="stat-noshows">–</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">DNF</div>
+          <div class="value" id="stat-dnf">–</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RACE SELECTION + RESULTS -->
+    <section class="card">
+      <h2>Ergebnis-Tabelle</h2>
+
+      <div class="filter-row">
+        <div>
+          <label for="race-select">Wettkampf:</label>
+          <select id="race-select"></select>
+        </div>
+        <!-- weitere Filter (AK, Geschlecht…) kannst du später ergänzen -->
+      </div>
+
+      <div id="results-table-container">
+        <!-- Tabelle wird per JS gerendert -->
+      </div>
+    </section>
+
+    <!-- HEATMAP / ORIGIN / MARKETING INSIGHTS -->
+    <section class="card">
+      <h2>Herkunft & Marketing-Insights</h2>
+      <div class="placeholder-panel">
+        <div id="chart-gender" style="margin-bottom:12px;"></div>
+        <div id="chart-countries"></div>
+        <!-- Später: echte Heatmap einbauen -->
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- JS -->
+<script src="../../core/js/tables.js"></script>
+<script src="../../core/js/charts.js"></script>
+<script>
+(async function () {
+  try {
+    const yearMeta = await fetch('year_meta.json').then(r => r.json());
+
+    // basic text
+    document.getElementById('year-title').textContent = yearMeta.title;
+    document.getElementById('year-description').textContent = yearMeta.description || '';
+    document.getElementById('crumb-event-name').textContent = yearMeta.eventName;
+    document.getElementById('crumb-year').textContent = `Jahr ${yearMeta.year}`;
+
+    // build race dropdown
+    const raceSelect = document.getElementById('race-select');
+    yearMeta.races.forEach(race => {
+      const opt = document.createElement('option');
+      opt.value = race.id;
+      opt.textContent = `${race.name} (${race.distance_km} km)`;
+      raceSelect.appendChild(opt);
+    });
+
+    async function loadRace(raceId) {
+      const race = yearMeta.races.find(r => r.id === raceId) || yearMeta.races[0];
+      if (!race) return;
+
+      const stats = await fetch(race.statsFile).then(r => r.json());
+      const results = await fetch(race.resultsFile).then(r => r.json());
+
+      // update header stats
+      document.getElementById('stat-participants').textContent = stats.participantsTotal ?? '–';
+      document.getElementById('stat-finishers').textContent = stats.finishers ?? '–';
+      document.getElementById('stat-noshows').textContent = stats.noShows ?? '–';
+      document.getElementById('stat-dnf').textContent = stats.dnf ?? '–';
+
+      // render table + “charts”
+      if (window.EMSTables) {
+        window.EMSTables.renderResultsTable('results-table-container', results);
+      }
+      if (window.EMSCharts) {
+        window.EMSCharts.renderGenderSplit('chart-gender', stats.genderSplit);
+        window.EMSCharts.renderCountryList('chart-countries', stats.countries);
+      }
+    }
+
+    // load initial race
+    const initialRaceId = yearMeta.races[0]?.id;
+    if (initialRaceId) {
+      raceSelect.value = initialRaceId;
+      await loadRace(initialRaceId);
+    }
+
+    raceSelect.addEventListener('change', () => {
+      loadRace(raceSelect.value);
+    });
+
+  } catch (e) {
+    console.error('Fehler beim Laden der Jahrgangsdaten', e);
+  }
+})();
+</script>
+
+</body>
+</html>
