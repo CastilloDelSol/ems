@@ -1,0 +1,29 @@
+[
+  {
+    "rank": 1,
+    "bib": 101,
+    "name": "Max Beispiel",
+    "country": "DE",
+    "gender": "M",
+    "ageGroup": "M30",
+    "time": "00:16:20"
+  },
+  {
+    "rank": 2,
+    "bib": 84,
+    "name": "Anna Muster",
+    "country": "DE",
+    "gender": "F",
+    "ageGroup": "F25",
+    "time": "00:17:05"
+  },
+  {
+    "rank": 3,
+    "bib": 203,
+    "name": "Luis Sample",
+    "country": "ES",
+    "gender": "M",
+    "ageGroup": "M35",
+    "time": "00:17:20"
+  }
+]
