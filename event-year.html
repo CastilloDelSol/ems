@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>EMS – Sonnenburg Endurance Festival 2024</title>
+    <link rel="stylesheet" href="ems.css">
+</head>
+<body>
+
+<div class="topbar">
+    <img src="ems-logo.png" class="logo" alt="EMS Logo">
+    <div>
+        <div class="title">EventMetriken Sonnenburg</div>
+        <div class="subtitle">Jahrgangs-Statistik & Ergebnisse</div>
+    </div>
+
+    <div class="searchbox">
+        <label for="top-search">Teilnehmer:</label>
+        <input id="top-search" type="text" placeholder="Name, Startnummer…">
+    </div>
+</div>
+
+<div class="sidebar">
+    <div class="sidebar-section">
+        <h4>Allgemein</h4>
+        <a href="index.html"><span class="icon">🏠</span> Landing / My Business</a>
+        <a href="events.html"><span class="icon">📊</span> Events</a>
+    </div>
+    <div class="sidebar-section">
+        <h4>Sonnenburg Festival</h4>
+        <a href="events.html"><span class="icon">ℹ</span> Event-Übersicht</a>
+        <a class="active" href="event-year.html"><span class="icon">📅</span> Jahr 2024</a>
+        <a href="#"><span class="icon">📅</span> Jahr 2023</a>
+        <a href="#"><span class="icon">📅</span> Jahr 2022</a>
+    </div>
+</div>
+
+<main>
+    <div class="layout-narrow">
+        <div class="breadcrumb">
+            <a href="index.html">Landing / My Business</a>
+            <span class="sep">›</span>
+            <a href="events.html">Sonnenburg Endurance Festival</a>
+            <span class="sep">›</span>
+            <span>Jahr 2024</span>
+        </div>
+
+        <section class="card">
+            <h1>Jahrgang 2024 – Sonnenburg Endurance Festival</h1>
+            <p>
+                Detailansicht des Jahrgangs 2024 mit Teilnehmer-Statistik,
+                Ergebnissen und einer Heatmap der Herkunftsregionen.
+            </p>
+
+            <div class="stat-grid" style="margin-top:14px;">
+                <div class="stat-card">
+                    <div class="label">Teilnehmer gesamt</div>
+                    <div class="value">1.120</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Finisher</div>
+                    <div class="value">1.080 (96,4 %)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Nationen</div>
+                    <div class="value">18 Länder</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Altersklassen</div>
+                    <div class="value">U18 – 70+</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Ergebnis-Tabelle</h2>
+
+            <div class="filter-row">
+                <div>
+                    <label for="distanz">Distanz:</label>
+                    <select id="distanz">
+                        <option>Alle Distanzen</option>
+                        <option>Triathlon Langdistanz</option>
+                        <option>Triathlon Mitteldistanz</option>
+                        <option>Halbmarathon</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="gender">Geschlecht:</label>
+                    <select id="gender">
+                        <option>Alle</option>
+                        <option>Frauen</option>
+                        <option>Männer</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="agegroup">Altersklasse:</label>
+                    <select id="agegroup">
+                        <option>Alle AK</option>
+                        <option>18–29</option>
+                        <option>30–39</option>
+                        <option>40–49</option>
+                        <option>50+</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Platz</th>
+                    <th>Name</th>
+                    <th>Land</th>
+                    <th>Distanz</th>
+                    <th>AK</th>
+                    <th>Gesamtzeit</th>
+                    <th>Swim</th>
+                    <th>Bike</th>
+                    <th>Run</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Max Beispiel</td>
+                    <td>DE</td>
+                    <td>Langdistanz</td>
+                    <td>M30</td>
+                    <td>8:05:32</td>
+                    <td>50:12</td>
+                    <td>4:15:40</td>
+                    <td>2:55:40</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Luis Sample</td>
+                    <td>ES</td>
+                    <td>Langdistanz</td>
+                    <td>M30</td>
+                    <td>8:12:10</td>
+                    <td>51:30</td>
+                    <td>4:18:00</td>
+                    <td>2:59:10</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>Heatmap & Teilnehmer-Herkunft</h2>
+            <div class="placeholder-panel">
+                Platzhalter für eine interaktive Karte / Heatmap der Herkunft:
+                <ul>
+                    <li>Cluster pro Region / Postleitzahl</li>
+                    <li>Filterbar nach Distanz / Kategorie</li>
+                    <li>Export-Funktion für Sponsorenreports</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Weitere Kennzahlen</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="label">Anmeldungen</div>
+                    <div class="value">1.250 Registrierungen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">No-Shows</div>
+                    <div class="value">130 (10,4 %)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">DNF / DSQ</div>
+                    <div class="value">40 Athlet:innen</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>
