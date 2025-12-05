@@ -1,0 +1,27 @@
+{
+  "eventId": "0001",
+  "eventName": "Sonnenburg Endurance Festival",
+  "year": 2024,
+  "title": "Sonnenburg Endurance Festival 2024",
+  "location": "Sonnenburg, DE",
+  "date": "2024-07-14",
+  "description": "Mehrtägiges Ausdauer-Festival mit Triathlon, Laufbewerben und Staffeln.",
+  "races": [
+    {
+      "id": "5km",
+      "name": "5 km Lauf",
+      "distance_km": 5,
+      "category": "run",
+      "resultsFile": "data/5km/results.json",
+      "statsFile": "data/5km/stats.json"
+    },
+    {
+      "id": "10km",
+      "name": "10 km Lauf",
+      "distance_km": 10,
+      "category": "run",
+      "resultsFile": "data/10km/results.json",
+      "statsFile": "data/10km/stats.json"
+    }
+  ]
+}
