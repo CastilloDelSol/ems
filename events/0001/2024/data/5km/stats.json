@@ -1,0 +1,28 @@
+{
+  "participantsTotal": 340,
+  "finishers": 332,
+  "noShows": 25,
+  "dnf": 8,
+  "genderSplit": {
+    "male": 210,
+    "female": 130
+  },
+  "countries": [
+    { "code": "DE", "name": "Deutschland", "count": 280 },
+    { "code": "AT", "name": "Österreich", "count": 30 },
+    { "code": "CZ", "name": "Tschechien", "count": 15 },
+    { "code": "PL", "name": "Polen", "count": 15 }
+  ],
+  "finishTime": {
+    "min": "00:16:20",
+    "avg": "00:27:45",
+    "max": "00:49:10"
+  },
+  "ageGroups": [
+    { "name": "U18", "count": 20 },
+    { "name": "18–29", "count": 110 },
+    { "name": "30–39", "count": 105 },
+    { "name": "40–49", "count": 70 },
+    { "name": "50+",  "count": 35 }
+  ]
+}
