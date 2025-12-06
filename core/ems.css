@@ -286,7 +286,7 @@ table tr:nth-child(even) {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    min-height: 260px;
+    min-height: 420px;
     margin-bottom: 22px;
     border: 1px solid var(--ems-border);
 }
