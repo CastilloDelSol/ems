@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!-- TOPBAR (GitHub-Style sticky) -->
 <div class="topbar">
     <img src="core/img/ems-logo.png" class="logo" alt="EMS Logo">
     <div>
@@ -20,7 +21,10 @@
     </div>
 </div>
 
+<!-- LAYOUT WRAPPER -->
 <div class="layout">
+
+    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="sidebar-section">
             <h4>Allgemein</h4>
@@ -33,70 +37,75 @@
         </div>
     </div>
 
-<main>
-    <div class="layout-narrow">
-        <!-- Hero with background image -->
-        <section class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <div class="hero-title">Rennen sichtbar machen.</div>
-                <div class="hero-subtitle">
-                    EMS visualisiert Rennverläufe, Teilnehmerströme und Kennzahlen –
-                    von Ironman-Distanzen bis zu kleinen Volks- und Vereinsläufen.
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="layout-narrow">
+
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-bg"></div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-title">Rennen sichtbar machen.</div>
+                    <div class="hero-subtitle">
+                        EMS visualisiert Rennverläufe, Teilnehmerströme und Kennzahlen –
+                        von Ironman-Distanzen bis zu kleinen Volks- und Vereinsläufen.
+                    </div>
+                    <form class="hero-search">
+                        <input type="text" placeholder="Event suchen – z.B. &quot;Sonnenburg Triathlon&quot;">
+                        <button type="submit">Suchen</button>
+                    </form>
                 </div>
-                <form class="hero-search">
-                    <input type="text" placeholder="Event suchen – z.B. &quot;Sonnenburg Triathlon&quot;">
-                    <button type="submit">Suchen</button>
-                </form>
-            </div>
-        </section>
+            </section>
 
-        <!-- What we do -->
-        <section class="card">
-            <h2>Was EMS macht</h2>
-            <p>
-                EventMetriken Sonnenburg hostet Renn-Events und liefert dazu
-                interaktive Auswertungen: Startlisten, Ergebnis-Tabellen,
-                Live-Splits, Heatmaps der Herkunft, Langzeit-Trends pro Event
-                und Jahrgang.
-            </p>
+            <!-- What we do -->
+            <section class="card">
+                <h2>Was EMS macht</h2>
+                <p>
+                    EventMetriken Sonnenburg hostet Renn-Events und liefert dazu
+                    interaktive Auswertungen: Startlisten, Ergebnis-Tabellen,
+                    Live-Splits, Heatmaps der Herkunft, Langzeit-Trends pro Event
+                    und Jahrgang.
+                </p>
 
-            <div class="stat-grid" style="margin-top:16px;">
-                <div class="stat-card">
-                    <div class="label">Aktive Events</div>
-                    <div class="value">12 Ausdauer-Events</div>
+                <div class="stat-grid" style="margin-top:16px;">
+                    <div class="stat-card">
+                        <div class="label">Aktive Events</div>
+                        <div class="value">12 Ausdauer-Events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Teilnehmer gesamt</div>
+                        <div class="value">&gt; 8.500 Athlet:innen</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Zeitraum</div>
+                        <div class="value">2016 – 2025</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="label">Teilnehmer gesamt</div>
-                    <div class="value">> 8.500 Athlet:innen</div>
+            </section>
+
+            <!-- Quick access -->
+            <section class="card">
+                <h2>Direkter Einstieg</h2>
+                <p>Beispiele für Events, die von EMS gehostet werden:</p>
+                <div class="pills" style="margin-top:10px;">
+                    <a href="event.html" class="pill">Sonnenburg Endurance Festival</a>
+                    <span class="pill">Stadtlauf Musterstadt</span>
+                    <span class="pill">Vereinsmeisterschaft Tri Team</span>
                 </div>
-                <div class="stat-card">
-                    <div class="label">Zeitraum</div>
-                    <div class="value">2016 – 2025</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Quick access to events -->
-        <section class="card">
-            <h2>Direkter Einstieg</h2>
-            <p>Beispiele für Events, die von EMS gehostet werden:</p>
-            <div class="pills" style="margin-top:10px;">
-                <a href="event.html" class="pill">Sonnenburg Endurance Festival</a>
-                <span class="pill">Stadtlauf Musterstadt</span>
-                <span class="pill">Vereinsmeisterschaft Tri Team</span>
-            </div>
-        </section>
-    </div>
-</main>
-</div>
+        </div>
+    </main>
 
+</div> <!-- END .layout -->
 
+<!-- FOOTER -->
 <footer class="ems-footer">
-  © 2025 EventMetriken Sonnenburg – Demo Layout.  
-  Platz für Impressum / Datenschutz / Kontakt.  
+  © 2025 EventMetriken Sonnenburg – Demo Layout.<br>
+  Platz für Impressum / Datenschutz / Kontakt.<br>
   Sponsoren-Logos und weiterführende Links können hier ergänzt werden.
 </footer>
+
 </body>
 </html>
