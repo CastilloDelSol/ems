@@ -4,6 +4,131 @@
   <meta charset="UTF-8">
   <title>EMS – Jahr 2024 | Sonnenburg Endurance Festival</title>
   <link rel="stylesheet" href="../../../core/ems.css">
+
+  <style>
+    /* --- Tabs under breadcrumb (endurance-data style) --- */
+    .ems-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0 18px 0;
+      border-bottom: 1px solid var(--ems-border);
+      padding-bottom: 4px;
+    }
+    .ems-tabs button {
+      border: none;
+      background: var(--ems-bg-light);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .ems-tabs button.active {
+      background: var(--ems-blue);
+      color: #fff;
+    }
+    .ems-view {
+      display: none;
+    }
+
+    /* --- Layout with right ad column --- */
+    .page-flex {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .page-main {
+      flex: 1;
+    }
+    .page-ad {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 80px;
+    }
+    .ad-box {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid var(--ems-border);
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .ad-box h3 {
+      margin-bottom: 6px;
+      font-size: 15px;
+      color: var(--ems-blue);
+    }
+    .ad-logo-placeholder {
+      height: 220px;
+      border-radius: 8px;
+      border: 1px dashed var(--ems-border);
+      background: var(--ems-bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--ems-text-light);
+      margin-bottom: 8px;
+    }
+
+    /* --- Placeholder areas for charts --- */
+    .placeholder-panel {
+      border-radius: 10px;
+      border: 1px dashed var(--ems-border);
+      background: #fbfaf9;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--ems-text-light);
+      margin-bottom: 14px;
+    }
+
+    /* --- Results table paging --- */
+    #pagination {
+      margin-top: 10px;
+      font-size: 13px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+    #pagination button {
+      border: 1px solid var(--ems-border);
+      background: #fff;
+      border-radius: 4px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #pagination button.active {
+      background: var(--ems-blue);
+      color: #fff;
+    }
+
+    /* --- Footer --- */
+    .ems-footer {
+      margin-top: 20px;
+      background: #3d3a36;
+      color: #e6e2dd;
+      padding: 16px 30px;
+      font-size: 12px;
+    }
+    .ems-footer a {
+      color: #f0b27a;
+      text-decoration: none;
+    }
+    .ems-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1000px) {
+      .page-flex {
+        flex-direction: column;
+      }
+      .page-ad {
+        width: 100%;
+        position: static;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -30,138 +155,446 @@
   </div>
   <div class="sidebar-section">
     <h4>Jahrgänge</h4>
+    <!-- this could be filled from event_meta.json later -->
     <a class="active" href="./index.html"><span class="icon">📅</span> Jahr 2024</a>
     <a href="../2023/index.html"><span class="icon">📅</span> Jahr 2023</a>
-    <!-- weitere Jahre… -->
   </div>
 </div>
 
 <!-- MAIN -->
 <main>
-  <div class="layout-narrow">
-    <div class="breadcrumb">
-      <a href="../../../index.html">Landing / My Business</a>
-      <span class="sep">›</span>
-      <a href="../index.html" id="crumb-event-name">Event</a>
-      <span class="sep">›</span>
-      <span id="crumb-year">Jahr</span>
-    </div>
+  <div class="page-flex layout-narrow">
 
-    <!-- YEAR HEADER -->
-    <section class="card">
-      <h1 id="year-title">Jahrgang …</h1>
-      <p id="year-description">
-        Lade Jahrgangsdaten…
-      </p>
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="page-main">
 
-      <div class="stat-grid" style="margin-top:14px;">
-        <div class="stat-card">
-          <div class="label">Teilnehmer gesamt</div>
-          <div class="value" id="stat-participants">–</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Finisher</div>
-          <div class="value" id="stat-finishers">–</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">No-Shows</div>
-          <div class="value" id="stat-noshows">–</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">DNF</div>
-          <div class="value" id="stat-dnf">–</div>
-        </div>
+      <div class="breadcrumb">
+        <a href="../../../index.html">Landing / My Business</a>
+        <span class="sep">›</span>
+        <a href="../index.html" id="crumb-event-name">Event</a>
+        <span class="sep">›</span>
+        <span id="crumb-year">Jahr</span>
       </div>
-    </section>
 
-    <!-- RACE SELECTION + RESULTS -->
-    <section class="card">
-      <h2>Ergebnis-Tabelle</h2>
+      <!-- Tabs (T1 – directly under breadcrumb) -->
+      <div class="ems-tabs">
+        <button data-tab="overview" class="active">Overview</button>
+        <button data-tab="results">Ergebnisse</button>
+        <button data-tab="stats">Statistik</button>
+        <button data-tab="athlete" id="tab-athlete" style="display:none">Athlet</button>
+      </div>
 
-      <div class="filter-row">
+      <!-- ============ OVERVIEW VIEW ============ -->
+      <div id="view-overview" class="ems-view" style="display:block">
+
+        <!-- YEAR HEADER / KPI -->
+        <section class="card">
+          <h1 id="year-title">Jahrgang …</h1>
+          <p id="year-description">Lade Jahrgangsdaten…</p>
+
+          <div class="stat-grid" style="margin-top:14px;">
+            <div class="stat-card">
+              <div class="label">Teilnehmer gesamt</div>
+              <div class="value" id="stat-participants">–</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Finisher</div>
+              <div class="value" id="stat-finishers">–</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">No-Shows</div>
+              <div class="value" id="stat-noshows">–</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">DNF</div>
+              <div class="value" id="stat-dnf">–</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Overview details: date / weather / donuts / Top6 -->
+        <section class="card">
+          <h2>Datum & Wetter</h2>
+          <div class="placeholder-panel">
+            Dummy: Datum & Wetter-Info (z.B. aus year_meta.json + Wetter-API)
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Teilnehmer & Zieleinlauf</h2>
+          <div class="placeholder-panel">
+            Dummy: Donuts M/W & Finish/DNF/DNS/DSQ für ausgewählten Wettkampf.
+          </div>
+          <div class="filter-row">
+            <div>
+              <label for="ov-race-select">Wettkampf:</label>
+              <select id="ov-race-select"></select>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Top 6 M/W mit Defizit-Chart</h2>
+          <div class="placeholder-panel">
+            Dummy: Top-6 Tabelle + Defizit-Liniendiagramm.
+          </div>
+        </section>
+
+      </div> <!-- /view-overview -->
+
+
+      <!-- ============ RESULTS VIEW ============ -->
+      <div id="view-results" class="ems-view">
+
+        <section class="card">
+          <h2>Ergebnis-Tabelle</h2>
+
+          <div class="filter-row">
+            <div>
+              <label for="race-select">Wettkampf:</label>
+              <select id="race-select"></select>
+            </div>
+            <div>
+              <label for="gender-select">M/W:</label>
+              <select id="gender-select">
+                <option value="">Gesamt</option>
+                <option value="M">Männer</option>
+                <option value="W">Frauen</option>
+              </select>
+            </div>
+            <div>
+              <label for="ak-select">AK:</label>
+              <select id="ak-select">
+                <option value="">Alle AK</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="results-table-container">
+            <!-- Tabelle wird per JS gerendert -->
+          </div>
+
+          <div id="pagination">
+            <!-- Paging Buttons -->
+          </div>
+        </section>
+
+      </div> <!-- /view-results -->
+
+
+      <!-- ============ STATS VIEW ============ -->
+      <div id="view-stats" class="ems-view">
+
+        <section class="card">
+          <h2>Statistik</h2>
+
+          <div class="filter-row">
+            <div>
+              <label for="stats-race-select">Wettkampf:</label>
+              <select id="stats-race-select"></select>
+            </div>
+            <div>
+              <label for="stats-gender-select">M/W:</label>
+              <select id="stats-gender-select">
+                <option value="">Gesamt</option>
+                <option value="M">Männer</option>
+                <option value="W">Frauen</option>
+              </select>
+            </div>
+            <div>
+              <label for="stats-ak-select">AK:</label>
+              <select id="stats-ak-select">
+                <option value="">Alle AK</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Histogramm Zielzeiten</h3>
+          <div class="placeholder-panel">Dummy: Histogramm Zielzeiten.</div>
+
+          <h3>AK Boxplots</h3>
+          <div class="placeholder-panel">Dummy: Boxplots pro Altersklasse.</div>
+
+          <h3>AK Pyramide</h3>
+          <div class="placeholder-panel">Dummy: Altersklassen-Pyramide M/W.</div>
+
+          <h3>Herkunft Land / Bundesland</h3>
+          <div class="placeholder-panel">
+            Dummy: Herkunftsverteilung (Land, Bundesland) – später Heatmap / Tabelle.
+          </div>
+        </section>
+
+      </div> <!-- /view-stats -->
+
+
+      <!-- ============ ATHLETE VIEW ============ -->
+      <div id="view-athlete" class="ems-view">
+
+        <section class="card" id="athlete-card">
+          <h2>Athlet</h2>
+          <div class="placeholder-panel">
+            Wähle einen Athleten in der Ergebnisliste, um Details zu sehen.
+          </div>
+        </section>
+
+      </div> <!-- /view-athlete -->
+
+    </div> <!-- /page-main -->
+
+
+    <!-- ===== RIGHT SPONSOR COLUMN ===== -->
+    <aside class="page-ad">
+      <div class="ad-box">
+        <h3>Sponsoren / Partner</h3>
+        <div class="ad-logo-placeholder">
+          Dummy-Anzeige – hier könnten Logos der Veranstaltungspartner stehen.
+        </div>
         <div>
-          <label for="race-select">Wettkampf:</label>
-          <select id="race-select"></select>
+          Platz für kurze Texte, Links oder Banner (z. B. „Jetzt anmelden für 2025“).
         </div>
-        <!-- weitere Filter (AK, Geschlecht…) kannst du später ergänzen -->
       </div>
+    </aside>
 
-      <div id="results-table-container">
-        <!-- Tabelle wird per JS gerendert -->
-      </div>
-    </section>
-
-    <!-- HEATMAP / ORIGIN / MARKETING INSIGHTS -->
-    <section class="card">
-      <h2>Herkunft & Marketing-Insights</h2>
-      <div class="placeholder-panel">
-        <div id="chart-gender" style="margin-bottom:12px;"></div>
-        <div id="chart-countries"></div>
-        <!-- Später: echte Heatmap einbauen -->
-      </div>
-    </section>
-  </div>
+  </div> <!-- /page-flex -->
 </main>
 
-<!-- JS -->
+<footer class="ems-footer">
+  © 2025 EventMetriken Sonnenburg – Demo Layout.  
+  Platz für Impressum / Datenschutz / Kontakt.  
+  Sponsoren-Logos und weiterführende Links können hier ergänzt werden.
+</footer>
+
+<!-- JS (optional: your shared helpers) -->
 <script src="../../../core/js/tables.js"></script>
 <script src="../../../core/js/charts.js"></script>
+
 <script>
+/**
+ * Year page script – load-all-once, endurance-data style sections.
+ * Uses year_meta.json with:
+ *  {
+ *    "eventName": "...",
+ *    "title": "...",
+ *    "description": "...",
+ *    "year": 2024,
+ *    "races": [
+ *      { "id":"5km", "name":"5 km Lauf", "distance_km":5,
+ *        "statsFile":"data/5km/stats.json",
+ *        "resultsFile":"data/5km/results.json"
+ *      },
+ *      ...
+ *    ]
+ *  }
+ */
 (async function () {
   try {
     const yearMeta = await fetch('year_meta.json').then(r => r.json());
 
-    // basic text
-    document.getElementById('year-title').textContent = yearMeta.title;
+    // ---------- BASIC TEXT ----------
+    document.getElementById('year-title').textContent = yearMeta.title || (
+      (yearMeta.eventName || 'Event') + ' ' + yearMeta.year
+    );
     document.getElementById('year-description').textContent = yearMeta.description || '';
-    document.getElementById('crumb-event-name').textContent = yearMeta.eventName;
-    document.getElementById('crumb-year').textContent = `Jahr ${yearMeta.year}`;
+    document.getElementById('crumb-event-name').textContent = yearMeta.eventName || 'Event';
+    document.getElementById('crumb-year').textContent = `Jahr ${yearMeta.year || ''}`;
 
-    // build race dropdown
-    const raceSelect = document.getElementById('race-select');
-    yearMeta.races.forEach(race => {
-      const opt = document.createElement('option');
-      opt.value = race.id;
-      opt.textContent = `${race.name} (${race.distance_km} km)`;
-      raceSelect.appendChild(opt);
+    // ---------- LOAD ALL RACE DATA ONCE ----------
+    const raceData = {}; // {raceId: {meta, stats, results}}
+    await Promise.all(
+      (yearMeta.races || []).map(async race => {
+        const [stats, results] = await Promise.all([
+          fetch(race.statsFile).then(r => r.json()),
+          fetch(race.resultsFile).then(r => r.json())
+        ]);
+        raceData[race.id] = { meta: race, stats, results };
+      })
+    );
+
+    // ---------- AGGREGATE YEAR STATS ----------
+    let totalParticipants = 0, totalFinishers = 0, totalNoShows = 0, totalDnf = 0;
+    Object.values(raceData).forEach(r => {
+      const s = r.stats || {};
+      totalParticipants += s.participantsTotal || 0;
+      totalFinishers   += s.finishers || 0;
+      totalNoShows     += s.noShows || 0;
+      totalDnf         += s.dnf || 0;
+    });
+    document.getElementById('stat-participants').textContent = totalParticipants || '–';
+    document.getElementById('stat-finishers').textContent   = totalFinishers   || '–';
+    document.getElementById('stat-noshows').textContent     = totalNoShows     || '–';
+    document.getElementById('stat-dnf').textContent         = totalDnf         || '–';
+
+    // ---------- FILL RACE DROPDOWNS ----------
+    function fillRaceSelect(selectId) {
+      const sel = document.getElementById(selectId);
+      if (!sel) return;
+      sel.innerHTML = '';
+      (yearMeta.races || []).forEach(race => {
+        const opt = document.createElement('option');
+        opt.value = race.id;
+        opt.textContent = `${race.name} (${race.distance_km} km)`;
+        sel.appendChild(opt);
+      });
+    }
+    fillRaceSelect('ov-race-select');
+    fillRaceSelect('race-select');
+    fillRaceSelect('stats-race-select');
+
+    const defaultRaceId = (yearMeta.races && yearMeta.races[0]?.id) || null;
+    if (defaultRaceId) {
+      document.getElementById('ov-race-select').value = defaultRaceId;
+      document.getElementById('race-select').value    = defaultRaceId;
+      document.getElementById('stats-race-select').value = defaultRaceId;
+    }
+
+    // ---------- TABS ----------
+    function showTab(name) {
+      document.querySelectorAll('.ems-view').forEach(v => v.style.display = 'none');
+      const active = document.getElementById('view-' + name);
+      if (active) active.style.display = 'block';
+      document.querySelectorAll('.ems-tabs button').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector('.ems-tabs button[data-tab="'+name+'"]');
+      if (btn) btn.classList.add('active');
+    }
+    document.querySelectorAll('.ems-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => showTab(btn.dataset.tab));
     });
 
-    async function loadRace(raceId) {
-      const race = yearMeta.races.find(r => r.id === raceId) || yearMeta.races[0];
+    // ---------- RESULTS TABLE + PAGING ----------
+    const PAGE_SIZE = 25;
+    function renderResultsTable(raceId, genderFilter, akFilter, page) {
+      const race = raceData[raceId];
       if (!race) return;
 
-      const stats = await fetch(race.statsFile).then(r => r.json());
-      const results = await fetch(race.resultsFile).then(r => r.json());
-
-      // update header stats
-      document.getElementById('stat-participants').textContent = stats.participantsTotal ?? '–';
-      document.getElementById('stat-finishers').textContent = stats.finishers ?? '–';
-      document.getElementById('stat-noshows').textContent = stats.noShows ?? '–';
-      document.getElementById('stat-dnf').textContent = stats.dnf ?? '–';
-
-      // render table + “charts”
-      if (window.EMSTables) {
-        window.EMSTables.renderResultsTable('results-table-container', results);
+      let rows = race.results || [];
+      if (genderFilter) {
+        rows = rows.filter(r => (r.gender || '').toUpperCase() === genderFilter.toUpperCase());
       }
-      if (window.EMSCharts) {
-        window.EMSCharts.renderGenderSplit('chart-gender', stats.genderSplit);
-        window.EMSCharts.renderCountryList('chart-countries', stats.countries);
+      if (akFilter) {
+        rows = rows.filter(r => (r.ageGroup || '') === akFilter);
+      }
+
+      // collect AK options
+      const akSet = new Set(rows.map(r => r.ageGroup).filter(Boolean));
+      const akSelect = document.getElementById('ak-select');
+      if (akSelect && !akSelect.dataset.filled) {
+        akSelect.innerHTML = '<option value="">Alle AK</option>';
+        Array.from(akSet).sort().forEach(ak => {
+          const opt = document.createElement('option');
+          opt.value = ak;
+          opt.textContent = ak;
+          akSelect.appendChild(opt);
+        });
+        akSelect.dataset.filled = '1';
+      }
+
+      const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+      page = Math.min(Math.max(page, 1), totalPages);
+      const start = (page - 1) * PAGE_SIZE;
+      const pageRows = rows.slice(start, start + PAGE_SIZE);
+
+      const container = document.getElementById('results-table-container');
+      if (!container) return;
+
+      // if you have EMSTables, use it; otherwise simple fallback
+      if (window.EMSTables && typeof window.EMSTables.renderResultsTable === 'function') {
+        window.EMSTables.renderResultsTable('results-table-container', pageRows, raceId);
+      } else {
+        let html = '<table><thead><tr>' +
+          '<th>Platz</th><th>Startnr.</th><th>Name</th>' +
+          '<th>Land</th><th>Geschlecht</th><th>AK</th><th>Zeit</th></tr></thead><tbody>';
+        pageRows.forEach(r => {
+          html += `<tr>
+            <td>${r.rank ?? ''}</td>
+            <td>${r.bib ?? ''}</td>
+            <td><a href="#" onclick="openAthlete('${raceId}', '${r.bib}');return false;">${r.name ?? ''}</a></td>
+            <td>${r.country ?? ''}</td>
+            <td>${r.gender ?? ''}</td>
+            <td>${r.ageGroup ?? ''}</td>
+            <td>${r.time ?? ''}</td>
+          </tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+      }
+
+      // pagination
+      const pg = document.getElementById('pagination');
+      if (pg) {
+        pg.innerHTML = '';
+        for (let p = 1; p <= totalPages; p++) {
+          const btn = document.createElement('button');
+          btn.textContent = p;
+          if (p === page) btn.classList.add('active');
+          btn.addEventListener('click', () => {
+            renderResultsTable(raceId,
+              document.getElementById('gender-select').value,
+              document.getElementById('ak-select').value,
+              p
+            );
+          });
+          pg.appendChild(btn);
+        }
       }
     }
 
-    // load initial race
-    const initialRaceId = yearMeta.races[0]?.id;
-    if (initialRaceId) {
-      raceSelect.value = initialRaceId;
-      await loadRace(initialRaceId);
+    // initial results render
+    if (defaultRaceId) {
+      renderResultsTable(defaultRaceId, '', '', 1);
     }
 
-    raceSelect.addEventListener('change', () => {
-      loadRace(raceSelect.value);
+    // filter events
+    document.getElementById('race-select').addEventListener('change', () => {
+      document.getElementById('ak-select').dataset.filled = '';
+      renderResultsTable(
+        document.getElementById('race-select').value,
+        document.getElementById('gender-select').value,
+        document.getElementById('ak-select').value,
+        1
+      );
     });
+    document.getElementById('gender-select').addEventListener('change', () => {
+      renderResultsTable(
+        document.getElementById('race-select').value,
+        document.getElementById('gender-select').value,
+        document.getElementById('ak-select').value,
+        1
+      );
+    });
+    document.getElementById('ak-select').addEventListener('change', () => {
+      renderResultsTable(
+        document.getElementById('race-select').value,
+        document.getElementById('gender-select').value,
+        document.getElementById('ak-select').value,
+        1
+      );
+    });
+
+    // ---------- ATHLETE DETAIL ----------
+    window.openAthlete = function (raceId, bib) {
+      const race = raceData[raceId];
+      if (!race) return;
+      const athlete = (race.results || []).find(r => String(r.bib) === String(bib));
+      if (!athlete) return;
+
+      // show athlete tab
+      document.getElementById('tab-athlete').style.display = 'inline-block';
+      showTab('athlete');
+
+      const card = document.getElementById('athlete-card');
+      card.innerHTML = `
+        <h2>${athlete.name || 'Athlet'}</h2>
+        <p>Startnummer: ${athlete.bib || ''} – AK: ${athlete.ageGroup || ''} – Land: ${athlete.country || ''}</p>
+        <div class="placeholder-panel">
+          Dummy: Defizit-Chart ±2 Athleten in der Altersklasse für ${athlete.name || ''}.
+        </div>
+      `;
+    };
 
   } catch (e) {
     console.error('Fehler beim Laden der Jahrgangsdaten', e);
+    document.getElementById('year-description').textContent =
+      'Fehler beim Laden der Daten für diesen Jahrgang.';
   }
 })();
 </script>
