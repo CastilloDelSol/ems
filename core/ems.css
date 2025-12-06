@@ -2,45 +2,42 @@
    GLOBAL COLORS
    ========================= */
 :root {
-    --ems-bg: #e6e2dd;
-    --ems-bg-light: #f4f2f0;
-    --ems-blue: #1e3a47;
+    --ems-bg: #e6e2dd;       /* warm grey background */
+    --ems-bg-light: #f4f2f0; /* lighter warm grey */
+    --ems-blue: #1e3a47;     /* logo primary */
     --ems-blue-light: #2d5561;
-    --ems-accent: #d2835e;
+    --ems-accent: #d2835e;   /* warm orange accent */
     --ems-text: #1a1a1a;
     --ems-text-light: #555;
     --ems-border: #c8c5c1;
 }
 
 /* =========================
-   RESET & BODY
+   GLOBAL RESET
    ========================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body {
-    height: 100%;
-}
-
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 sans-serif;
     background: var(--ems-bg);
     color: var(--ems-text);
-    /* WICHTIG: KEIN FLEX – sonst bricht das Dashboard */
+    /* WICHTIG: kein display:flex, kein height:100vh, kein overflow:hidden */
 }
 
 /* =========================
-   TOP BAR (höher + sauber)
+   TOP BAR WITH LOGO
    ========================= */
 .topbar {
-    height: 72px; /* deine Anforderung */
+    height: 72px;                       /* etwas höher als vorher */
     background: #fff;
     border-bottom: 1px solid var(--ems-border);
     display: flex;
     align-items: center;
-    padding: 0 28px;  /* etwas breiter, wie GitHub */
+    padding: 0 28px;                    /* etwas mehr Horizontal-Padding */
     position: fixed;
-    top: 0;
     width: 100%;
+    top: 0;
     z-index: 1000;
 }
 
@@ -67,6 +64,11 @@ body {
     gap: 8px;
 }
 
+.topbar .searchbox label {
+    font-size: 13px;
+    color: var(--ems-text-light);
+}
+
 .topbar input[type="text"] {
     padding: 7px 10px;
     border: 1px solid var(--ems-border);
@@ -76,11 +78,11 @@ body {
 }
 
 /* =========================
-   SIDEBAR (links fixiert)
+   SIDEBAR
    ========================= */
 .sidebar {
     position: fixed;
-    top: 72px; /* neue Topbar-Höhe */
+    top: 72px;                           /* unter der höheren Topbar */
     left: 0;
     width: 240px;
     height: calc(100vh - 72px);
@@ -114,6 +116,10 @@ body {
     font-size: 14px;
 }
 
+.sidebar a span.icon {
+    margin-right: 6px;
+}
+
 .sidebar a:hover,
 .sidebar a.active {
     background: var(--ems-blue);
@@ -121,22 +127,24 @@ body {
 }
 
 /* =========================
-   MAIN CONTENT (mehr Abstand)
+   MAIN CONTENT AREA
    ========================= */
 main {
-    margin-top: 72px;
-    margin-left: 240px;
-    padding: 32px 42px;   /* deine gewünschte Symmetrie */
+    margin-top: 72px;                    /* Platz für Topbar */
+    margin-left: 240px;                  /* Platz für Sidebar */
+    padding: 32px 40px 40px;             /* mehr horizontaler & vertikaler Abstand */
+    /* keine feste Höhe, kein overflow-y: auto → Seite scrollt normal */
 }
 
 .layout-narrow {
     max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;      /* Gutter, aber NICHT zentrierter Inhalt */
+    margin: 0;                           /* NICHT mittig zentrieren */
+    padding-right: 20px;                 /* etwas Gutter nach rechts */
+    /* linke Kante bleibt an main-Start → Hero NICHT zentriert */
 }
 
 /* =========================
-   cards, text
+   CARDS
    ========================= */
 .card {
     background: #fff;
@@ -157,7 +165,7 @@ main {
 }
 
 /* =========================
-   HERO (NICHT zentriert!)
+   HERO (FULL-WIDTH LINKSBÜNDIG)
    ========================= */
 .hero {
     position: relative;
@@ -180,8 +188,9 @@ main {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent),
-                linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.6));
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,0.15), transparent),
+        linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.6));
 }
 
 .hero-content {
@@ -190,33 +199,116 @@ main {
     color: #fff;
     padding: 30px 26px;
     max-width: 560px;
-    /* ❗ WICHTIG: NICHT zentriert, NICHT justify-center, NICHT margin:auto */
+    /* NICHT zentriert – keine margins, kein flex-Parent o.ä. */
+}
+
+.hero-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.hero-subtitle {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.hero-search {
+    display: flex;
+    gap: 8px;
+}
+
+.hero-search input[type="text"] {
+    flex: 1;
+    border-radius: 6px;
+    border: none;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.hero-search button {
+    border-radius: 6px;
+    border: none;
+    background: var(--ems-accent);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 /* =========================
-   Footer (wie GitHub, aber unter Sidebar)
+   STAT GRID, PILLS, ETC.
+   (wie bei dir, unverändert)
+   ========================= */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.stat-card {
+    background: var(--ems-bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--ems-border);
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+.stat-card .label {
+    color: var(--ems-text-light);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+
+.stat-card .value {
+    font-weight: 600;
+    color: var(--ems-blue);
+}
+
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.pill {
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--ems-border);
+    font-size: 13px;
+    background: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--ems-text);
+}
+
+.pill:hover,
+.pill.active {
+    border-color: var(--ems-blue);
+    background: var(--ems-blue);
+    color: #fff;
+}
+
+/* =========================
+   FOOTER – VOLL BREIT, ZENTRIERT
    ========================= */
 .ems-footer {
+    margin-top: 24px;
     background: #3d3a36;
     color: #e6e2dd;
     padding: 16px 30px;
     font-size: 12px;
     text-align: center;
     border-top: 1px solid var(--ems-border);
-    margin-left: 240px; /* unter Sidebar ausrichten */
+    /* KEIN margin-left → läuft unter Sidebar durch */
 }
 
 /* =========================
-   Responsive
+   RESPONSIVE
    ========================= */
 @media (max-width: 900px) {
-    .sidebar { display: none; }
-    main { margin-left: 0; }
-    .ems-footer { margin-left: 0; }
-}
-
-@media (max-width: 600px) {
-    .topbar .subtitle { display: none; }
-    .hero-content { padding: 22px 16px; }
-    .hero-title { font-size: 26px; }
-}
