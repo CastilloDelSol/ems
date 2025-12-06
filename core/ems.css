@@ -1,4 +1,18 @@
 /* =========================
+   GLOBAL COLORS
+   ========================= */
+:root {
+    --ems-bg: #e6e2dd;
+    --ems-bg-light: #f4f2f0;
+    --ems-blue: #1e3a47;
+    --ems-blue-light: #2d5561;
+    --ems-accent: #d2835e;
+    --ems-text: #1a1a1a;
+    --ems-text-light: #555;
+    --ems-border: #c8c5c1;
+}
+
+/* =========================
    GLOBAL RESET + BODY
    ========================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
