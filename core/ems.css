@@ -317,3 +317,19 @@ main {
    RESPONSIVE
    ========================= */
 @media (max-width: 900px) {
+    .app-shell {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--ems-border);
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar .subtitle { display: none; }
+    .hero-content { padding: 22px 16px; }
+    .hero-title { font-size: 26px; }
+}
