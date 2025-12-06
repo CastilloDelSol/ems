@@ -2,50 +2,46 @@
    GLOBAL COLORS
    ========================= */
 :root {
-    --ems-bg: #e6e2dd;       /* warm grey background */
-    --ems-bg-light: #f4f2f0; /* lighter warm grey */
-    --ems-blue: #1e3a47;     /* logo primary */
+    --ems-bg: #e6e2dd;
+    --ems-bg-light: #f4f2f0;
+    --ems-blue: #1e3a47;
     --ems-blue-light: #2d5561;
-    --ems-accent: #d2835e;   /* warm orange accent */
+    --ems-accent: #d2835e;
     --ems-text: #1a1a1a;
     --ems-text-light: #555;
     --ems-border: #c8c5c1;
 }
 
 /* =========================
-   GLOBAL RESET
+   RESET & BODY
    ========================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
-    height: auto;
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: var(--ems-bg);
     color: var(--ems-text);
+    /* WICHTIG: KEIN FLEX – sonst bricht das Dashboard */
 }
 
 /* =========================
-   TOP BAR (GitHub style)
+   TOP BAR (höher + sauber)
    ========================= */
 .topbar {
-    height: 70px;
+    height: 72px; /* deine Anforderung */
     background: #fff;
     border-bottom: 1px solid var(--ems-border);
     display: flex;
     align-items: center;
-    padding: 0 28px;
-    position: sticky;
+    padding: 0 28px;  /* etwas breiter, wie GitHub */
+    position: fixed;
     top: 0;
-    z-index: 50;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    width: 100%;
+    z-index: 1000;
 }
 
 .topbar img.logo {
@@ -53,23 +49,45 @@ body {
     margin-right: 15px;
 }
 
-/* =========================
-   LAYOUT (sidebar + main)
-   ========================= */
-.app-shell {
-    display: flex;
-    width: 100%;
+.topbar .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ems-blue);
 }
 
-/* SIDEBAR */
+.topbar .subtitle {
+    font-size: 12px;
+    color: var(--ems-text-light);
+}
+
+.topbar .searchbox {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topbar input[type="text"] {
+    padding: 7px 10px;
+    border: 1px solid var(--ems-border);
+    border-radius: 6px;
+    width: 230px;
+    font-size: 13px;
+}
+
+/* =========================
+   SIDEBAR (links fixiert)
+   ========================= */
 .sidebar {
+    position: fixed;
+    top: 72px; /* neue Topbar-Höhe */
+    left: 0;
     width: 240px;
+    height: calc(100vh - 72px);
     background: var(--ems-bg-light);
     border-right: 1px solid var(--ems-border);
-    padding: 22px 18px;
-    min-height: calc(100vh - 70px);
-    position: sticky;
-    top: 70px;
+    padding: 18px;
+    overflow-y: auto;
 }
 
 .sidebar h4 {
@@ -81,8 +99,8 @@ body {
 }
 
 .sidebar-section {
-    margin-bottom: 18px;
-    padding-bottom: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #d8d4d0;
 }
 
@@ -103,21 +121,22 @@ body {
 }
 
 /* =========================
-   MAIN CONTENT
+   MAIN CONTENT (mehr Abstand)
    ========================= */
 main {
-    flex: 1;
-    padding: 40px;                   /* schön gleichmäßig */
+    margin-top: 72px;
+    margin-left: 240px;
+    padding: 32px 42px;   /* deine gewünschte Symmetrie */
 }
 
 .layout-narrow {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 24px;                 /* horizontaler Gutter */
+    padding: 0 20px;      /* Gutter, aber NICHT zentrierter Inhalt */
 }
 
 /* =========================
-   CARDS & TEXT (unchanged)
+   cards, text
    ========================= */
 .card {
     background: #fff;
@@ -127,8 +146,18 @@ main {
     margin-bottom: 20px;
 }
 
+.card h1, .card h2, .card h3 {
+    margin-bottom: 8px;
+    color: var(--ems-blue);
+}
+
+.card p {
+    color: var(--ems-text-light);
+    font-size: 14px;
+}
+
 /* =========================
-   HERO (unchanged optically)
+   HERO (NICHT zentriert!)
    ========================= */
 .hero {
     position: relative;
@@ -139,43 +168,51 @@ main {
     border: 1px solid var(--ems-border);
 }
 
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG/1280px-Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG");
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(70%) brightness(0.65);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent),
+                linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.6));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 30px 26px;
+    max-width: 560px;
+    /* ❗ WICHTIG: NICHT zentriert, NICHT justify-center, NICHT margin:auto */
+}
+
 /* =========================
-   FOOTER
+   Footer (wie GitHub, aber unter Sidebar)
    ========================= */
 .ems-footer {
     background: #3d3a36;
     color: #e6e2dd;
-    padding: 20px 30px;
-    text-align: center;
+    padding: 16px 30px;
     font-size: 12px;
+    text-align: center;
     border-top: 1px solid var(--ems-border);
-    margin-top: 40px;
+    margin-left: 240px; /* unter Sidebar ausrichten */
 }
 
 /* =========================
-   RESPONSIVE
+   Responsive
    ========================= */
 @media (max-width: 900px) {
-    .app-shell {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--ems-border);
-        position: relative;
-        top: 0;
-        min-height: auto;
-    }
-
-    main {
-        padding: 20px;
-    }
-
-    .layout-narrow {
-        padding: 0 16px;
-    }
+    .sidebar { display: none; }
+    main { margin-left: 0; }
+    .ems-footer { margin-left: 0; }
 }
 
 @media (max-width: 600px) {
