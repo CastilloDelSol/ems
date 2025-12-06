@@ -349,6 +349,24 @@ table tr:nth-child(even) {
     cursor: pointer;
 }
 
+/* --- Footer --- */
+.ems-footer {
+      margin-top: 20px;
+      background: #3d3a36;
+      color: #e6e2dd;
+      padding: 16px 30px;
+      font-size: 12px;
+    }
+
+.ems-footer a {
+      color: #f0b27a;
+      text-decoration: none;
+    }
+
+.ems-footer a:hover {
+      text-decoration: underline;
+    }
+
 /* =========================
    RESPONSIVE
    ========================= */
