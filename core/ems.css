@@ -1,11 +1,10 @@
 /* =========================
-   GLOBAL COLORS
+   COLORS
    ========================= */
 :root {
     --ems-bg: #e6e2dd;
     --ems-bg-light: #f4f2f0;
     --ems-blue: #1e3a47;
-    --ems-blue-light: #2d5561;
     --ems-accent: #d2835e;
     --ems-text: #1a1a1a;
     --ems-text-light: #555;
@@ -13,33 +12,33 @@
 }
 
 /* =========================
-   GLOBAL RESET + BODY
+   RESET
    ========================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body {
-    height: 100%;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+body {
     background: var(--ems-bg);
     color: var(--ems-text);
+    font-family: system-ui, sans-serif;
+    margin: 0;
 }
 
 /* =========================
-   TOP BAR (scollt wie GitHub)
+   TOPBAR — GitHub Behavior
    ========================= */
 .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     height: 60px;
     background: #fff;
     border-bottom: 1px solid var(--ems-border);
     display: flex;
     align-items: center;
     padding: 0 20px;
-    position: sticky;     /* <-- GitHub-Style */
-    top: 0;
-    z-index: 50;
 }
 
-.topbar img.logo {
+.topbar .logo {
     height: 42px;
     margin-right: 15px;
 }
@@ -58,74 +57,76 @@ html, body {
 .topbar .searchbox {
     margin-left: auto;
     display: flex;
-    align-items: center;
     gap: 8px;
 }
 
-.topbar input[type="text"] {
+.topbar input {
     padding: 7px 10px;
     border: 1px solid var(--ems-border);
     border-radius: 6px;
     width: 230px;
-    font-size: 13px;
 }
 
-
 /* =========================
-   LAYOUT WRAPPER
+   LAYOUT
    ========================= */
 .layout {
     display: flex;
-    min-height: calc(100vh - 60px); /* Platz unter der Topbar */
+    min-height: calc(100vh - 60px);
 }
 
-
-/* =========================
-   SIDEBAR (sticky)
-   ========================= */
+/* SIDEBAR */
 .sidebar {
     width: 240px;
     background: var(--ems-bg-light);
     border-right: 1px solid var(--ems-border);
     padding: 18px;
     position: sticky;
-    top: 60px;        /* Klemmt genau unter Topbar */
-    align-self: flex-start;
+    top: 60px;
     height: calc(100vh - 60px);
     overflow-y: auto;
 }
 
+.sidebar-section {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d8d4d0;
+}
 
-/* =========================
-   MAIN CONTENT
-   ========================= */
+.sidebar h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ems-blue);
+    margin-bottom: 6px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 7px 6px;
+    text-decoration: none;
+    color: var(--ems-text);
+    border-radius: 6px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background: var(--ems-blue);
+    color: #fff;
+}
+
+/* MAIN */
 main {
     flex: 1;
-    padding: 22px 30px 40px;
+    padding: 25px 30px 40px;
 }
 
 .layout-narrow {
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
 }
 
-
-/* =========================
-   FOOTER (normal, am Ende)
-   ========================= */
-.ems-footer {
-    background: #3d3a36;
-    color: #e6e2dd;
-    padding: 16px 30px;
-    font-size: 12px;
-    margin-left: 240px;  /* unter sidebar ausrichten */
-}
-
-
-/* =========================
-   CARDS, HERO, ETC.
-   (unverändert, nur gekürzt)
-   ========================= */
+/* CARDS */
 .card {
     background: #fff;
     padding: 20px;
@@ -134,6 +135,7 @@ main {
     margin-bottom: 20px;
 }
 
+/* HERO */
 .hero {
     position: relative;
     border-radius: 12px;
@@ -146,16 +148,39 @@ main {
 .hero-bg {
     position: absolute;
     inset: 0;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG/1280px-Faro_Les_%C3%89claireurs%2C_Ushuaia_11.JPG");
     background-size: cover;
     background-position: center;
-    filter: grayscale(70%) brightness(0.65);
+    filter: grayscale(70%) brightness(.65);
 }
 
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.7));
+}
 
-/* =========================
-   RESPONSIVE
-   ========================= */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    padding: 30px 26px;
+    max-width: 560px;
+}
+
+/* FOOTER — über komplette Breite */
+.ems-footer {
+    width: 100%;
+    padding: 20px 30px;
+    background: #3d3a36;
+    color: #e6e2dd;
+    text-align: center;
+    border-top: 1px solid var(--ems-border);
+}
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
     .sidebar { display: none; }
+    .layout { flex-direction: column; }
     .ems-footer { margin-left: 0; }
 }
