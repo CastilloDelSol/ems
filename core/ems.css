@@ -22,7 +22,7 @@ body {
                  sans-serif;
     background: var(--ems-bg);
     color: var(--ems-text);
-    display: flex;
+    /*display: flex;*/
     height: 100vh;
     overflow: hidden;
 }
