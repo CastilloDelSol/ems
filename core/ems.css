@@ -27,7 +27,7 @@ body {
     background: var(--ems-bg);
     color: var(--ems-text);
     display: flex;
-    flex-direction: column;    /* Header oben, Footer unten */
+    flex-direction: column;
     min-height: 100vh;
 }
 
@@ -35,13 +35,13 @@ body {
    TOP BAR WITH LOGO
    ========================= */
 .topbar {
-    height: 60px;
+    height: 70px;                 /* 🔥 höher, GitHub-Style */
     background: #fff;
     border-bottom: 1px solid var(--ems-border);
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    /* GitHub-Style: Header scrollt mit und verschwindet */
+    padding: 0 26px;              /* 🔥 mehr horizontaler Platz */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06); /* optional, classy */
 }
 
 .topbar img.logo {
@@ -85,7 +85,7 @@ body {
    ========================= */
 .app-shell {
     display: flex;
-    flex: 1;                   /* füllt den Platz zwischen Header und Footer */
+    flex: 1;
 }
 
 /* SIDEBAR */
@@ -130,16 +130,19 @@ body {
     color: #fff;
 }
 
-/* MAIN CONTENT AREA */
+/* =========================
+   MAIN CONTENT AREA
+   ========================= */
 main {
     flex: 1;
-    padding: 22px 26px 26px;
-    overflow: visible;         /* Seite scrollt normal, nicht nur main */
+    padding: 32px;                 /* 🔥 gleichmäßiger Abstand wie besprochen */
+    overflow: visible;
 }
 
 .layout-narrow {
     max-width: 1100px;
     margin: 0 auto;
+    padding: 0 12px;               /* 🔥 horizontaler Gutter */
 }
 
 /* =========================
@@ -163,7 +166,7 @@ main {
     font-size: 14px;
 }
 
-/* Breadcrumb (falls du sie benutzt) */
+/* Breadcrumb */
 .breadcrumb {
     font-size: 13px;
     margin-bottom: 12px;
@@ -254,7 +257,7 @@ table tr:nth-child(even) {
     color: #fff;
 }
 
-/* Placeholder panels (charts / maps) */
+/* Placeholder panels */
 .placeholder-panel {
     border-radius: 10px;
     border: 1px dashed var(--ems-border);
@@ -280,7 +283,7 @@ table tr:nth-child(even) {
 }
 
 /* =========================
-   LANDING PAGE HERO
+   HERO
    ========================= */
 .hero {
     position: relative;
@@ -350,7 +353,9 @@ table tr:nth-child(even) {
     cursor: pointer;
 }
 
-/* --- Footer --- */
+/* =========================
+   FOOTER
+   ========================= */
 .ems-footer {
     background: #3d3a36;
     color: #e6e2dd;
