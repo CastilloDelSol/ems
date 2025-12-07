@@ -176,7 +176,7 @@ main {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    min-height: 420px;
+    min-height: 720px;
     margin-bottom: 22px;
     border: 1px solid var(--ems-border);
 }
